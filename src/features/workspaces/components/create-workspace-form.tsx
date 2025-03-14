@@ -1,6 +1,5 @@
 "use client";
 import { z } from "zod";
-import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createWorkSpaceSchema } from "../schemas";
@@ -17,6 +16,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateWorkspace } from "../api/use-create-workspace";
+import { useRef } from "react";
+import Image from "next/image";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ImageIcon } from "lucide-react";
+
 
 interface Props {
 	onCancel?: () => void;
@@ -25,7 +29,6 @@ const CreateWorkspaceForm = ({ onCancel }: Props) => {
 	const { mutate, isPending } = useCreateWorkspace();
 
 	const inputRef = useRef<HTMLInputElement>(null);
-
 	const form = useForm<z.infer<typeof createWorkSpaceSchema>>({
 		resolver: zodResolver(createWorkSpaceSchema),
 		defaultValues: {
@@ -70,6 +73,36 @@ const CreateWorkspaceForm = ({ onCancel }: Props) => {
 										<FormMessage />
 									</FormItem>
 								)}
+							/>
+							<FormField 
+								control={form.control}
+								name="image"
+								render={({ field }) => (
+									<div className="flex flex-col gap-y-2"> 
+										<div className="flex items-center gap-x-5">
+											{field.value ? (
+												<div>
+													<Image 
+														alt="Logo"
+														fill
+														src={
+															field.value instanceof File
+															? URL.createObjectURL(field.value)
+															: field.value
+														}
+													/>
+												 </div>
+											) : (
+												<Avatar className="size-[72px]">
+													<AvatarFallback>
+														<ImageIcon className="size-[36px] text-neutral-400" />
+													</AvatarFallback>
+												</Avatar>
+											)
+										}
+										</div>
+									</div>
+								)} 
 							/>
 						</div>
 
