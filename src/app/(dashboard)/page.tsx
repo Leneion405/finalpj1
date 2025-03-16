@@ -1,5 +1,5 @@
-import { getCurrent } from "@/features/auth/action";
-import { getWorkspaces } from "@/features/workspaces/action";
+import { getCurrent } from "@/features/auth/qurries";
+import { getWorkspaces } from "@/features/workspaces/qurries";
 
 import { redirect } from "next/navigation";
 

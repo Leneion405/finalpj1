@@ -1,5 +1,5 @@
 
-import { getCurrent } from "@/features/auth/action";
+import { getCurrent } from "@/features/auth/qurries";
 import { SignInCard } from "@/features/auth/components/sign-in-card";
 import { redirect } from "next/navigation";
 
